@@ -1,0 +1,44 @@
+# Git
+
+## Clone a private repository to cPanel
+
+* Create a password-less ssh-key from
+
+  cPanel > Terminal by entering the following command
+
+```bash
+cd ~/.ssh/
+ssh-keygen -t rsa -f ~/.ssh/repo -b 4096 -C "[email protected]"
+ssh-keygen -t rsa -f ~/.ssh/testing -b 4096 -C "[email protected]"
+
+touch ~/.ssh/config
+chmod 0600 ~/.ssh/config
+chown cpanelusername:cpanelusername ~/.ssh/config
+```
+
+* Open ~/.ssh/config with the text editor
+
+```bash
+Host github.com
+    IdentityFile ~/.ssh/testing
+```
+
+* Copy and paste the displayed public-key into the github.com > Settings > DEploy Key > SSH Keys
+* Test the SSH key
+```bash
+ssh -i ~/.ssh/testing -T git@github.com
+```
+
+* Go to cpanel > Git Manage > create repo
+
+## Set up access to multiple repositories
+
+```bash
+Host github.com-testing
+        Hostname github.com
+        IdentityFile=/home/cptest/.ssh/testing
+
+Host github.com-testing2
+        Hostname github.com
+        IdentityFile=/home/cptest/.ssh/testing2
+```
